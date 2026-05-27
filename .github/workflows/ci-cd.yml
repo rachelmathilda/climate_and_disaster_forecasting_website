@@ -2,11 +2,9 @@ name: Biosfera CI/CD
 
 on:
   push:
-    branches:
-      - main
+    branches: [main]
   pull_request:
-    branches:
-      - main
+    branches: [main]
 
 env:
   REGISTRY: ghcr.io
@@ -14,7 +12,7 @@ env:
 
 jobs:
   ci:
-    name: Lint & Build
+    name: Lint, Typecheck & Build
     runs-on: ubuntu-latest
 
     steps:
@@ -42,10 +40,9 @@ jobs:
           NEXT_TELEMETRY_DISABLED: "1"
 
   cd:
-    name: Deploy
+    name: Build & Push Docker Image (GHCR)
     runs-on: ubuntu-latest
     needs: ci
-    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
 
     permissions:
       contents: read
@@ -68,7 +65,7 @@ jobs:
         with:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
           tags: |
-            type=sha,prefix=sha-
+            type=sha
             type=raw,value=latest
 
       - name: Set up Docker Buildx
@@ -83,16 +80,3 @@ jobs:
           labels: ${{ steps.meta.outputs.labels }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
-
-      - name: Deploy to VPS
-        uses: appleboy/ssh-action@v1.0.3
-        with:
-          host: ${{ secrets.VPS_HOST }}
-          username: ${{ secrets.VPS_USER }}
-          key: ${{ secrets.VPS_SSH_KEY }}
-          script: |
-            docker pull ghcr.io/${{ github.repository }}:latest
-            docker stop biosfera || true
-            docker rm biosfera || true
-            docker run -d --name biosfera --restart unless-stopped -p 3000:3000 ghcr.io/${{ github.repository }}:latest
-            
