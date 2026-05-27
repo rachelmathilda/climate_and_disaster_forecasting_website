@@ -2,18 +2,17 @@ name: Biosfera CI/CD
 
 on:
   push:
-    branches: [main]
+    branches:
+      - main
   pull_request:
-    branches: [main]
+    branches:
+      - main
 
 env:
   REGISTRY: ghcr.io
   IMAGE_NAME: ${{ github.repository }}
 
 jobs:
-  # ─────────────────────────────────────────────
-  # 1. CI — lint, typecheck, build
-  # ─────────────────────────────────────────────
   ci:
     name: Lint & Build
     runs-on: ubuntu-latest
@@ -25,8 +24,8 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
-          cache: 'npm'
+          node-version: "20"
+          cache: npm
 
       - name: Install dependencies
         run: npm ci
@@ -40,11 +39,8 @@ jobs:
       - name: Build
         run: npm run build
         env:
-          NEXT_TELEMETRY_DISABLED: 1
+          NEXT_TELEMETRY_DISABLED: "1"
 
-  # ─────────────────────────────────────────────
-  # 2. CD — Docker build & push to GHCR → deploy
-  # ─────────────────────────────────────────────
   cd:
     name: Deploy
     runs-on: ubuntu-latest
@@ -75,6 +71,9 @@ jobs:
             type=sha,prefix=sha-
             type=raw,value=latest
 
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
       - name: Build and push Docker image
         uses: docker/build-push-action@v5
         with:
@@ -85,7 +84,6 @@ jobs:
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
-      # ── Option A: deploy to a VPS via SSH ──
       - name: Deploy to VPS
         uses: appleboy/ssh-action@v1.0.3
         with:
@@ -96,8 +94,5 @@ jobs:
             docker pull ghcr.io/${{ github.repository }}:latest
             docker stop biosfera || true
             docker rm biosfera || true
-            docker run -d \
-              --name biosfera \
-              --restart unless-stopped \
-              -p 3000:3000 \
-              ghcr.io/${{ github.repository }}:latest
+            docker run -d --name biosfera --restart unless-stopped -p 3000:3000 ghcr.io/${{ github.repository }}:latest
+            
