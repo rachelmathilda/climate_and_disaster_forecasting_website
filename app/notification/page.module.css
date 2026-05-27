@@ -1,0 +1,166 @@
+.wrapper { display: flex; flex-direction: column; min-height: 100vh; }
+
+/* Landing */
+.landing {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+}
+
+.btnGroup { display: flex; gap: 20px; }
+
+.primaryBtnLanding {
+  background: #5B8DEF;
+  color: #fff;
+  font-size: 18px;
+  font-weight: 500;
+  padding: 18px 64px;
+  border-radius: 20px;
+  border: none;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+.primaryBtnLanding:hover { opacity: 0.9; }
+
+.secondaryBtnLanding {
+  background: #f3f4f6;
+  color: #1a1a1a;
+  font-size: 18px;
+  font-weight: 500;
+  padding: 18px 64px;
+  border-radius: 20px;
+  border: none;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.secondaryBtnLanding:hover { background: #e5e7eb; }
+
+.landingDesc { font-size: 15px; color: #6b7280; text-align: center; }
+
+/* Auth */
+.formCenter {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.authCard {
+  background: #fff;
+  border-radius: 24px;
+  box-shadow: 0 4px 40px rgba(0,0,0,0.08);
+  padding: 40px 48px;
+  width: 420px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.authTitle {
+  font-size: 28px;
+  font-weight: 700;
+  color: #5B8DEF;
+  text-align: center;
+  margin-bottom: 4px;
+}
+
+.input {
+  background: #f3f4f6;
+  border: none;
+  border-radius: 9999px;
+  padding: 14px 20px;
+  font-size: 15px;
+  color: #374151;
+  outline: none;
+  width: 100%;
+  transition: background 0.2s;
+}
+.input:focus { background: #e9ecf1; }
+.input::placeholder { color: #9ca3af; }
+
+.textarea {
+  background: #f3f4f6;
+  border: none;
+  border-radius: 16px;
+  padding: 14px 20px;
+  font-size: 15px;
+  color: #374151;
+  outline: none;
+  width: 100%;
+  resize: none;
+  font-family: inherit;
+}
+
+.socialRow {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  padding: 4px 0;
+}
+
+.socialBtn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.15s;
+}
+.socialBtn:hover { transform: scale(1.08); }
+
+.primaryBtn {
+  background: #5B8DEF;
+  color: #fff;
+  font-size: 16px;
+  font-weight: 600;
+  padding: 16px;
+  border-radius: 9999px;
+  border: none;
+  cursor: pointer;
+  transition: opacity 0.2s;
+  width: 100%;
+  margin-top: 4px;
+}
+.primaryBtn:hover { opacity: 0.9; }
+
+.switchText { font-size: 13px; color: #6b7280; text-align: center; }
+.linkBtn { background: none; border: none; color: #5B8DEF; cursor: pointer; font-size: 13px; }
+
+/* Subscribe */
+.subscribePage {
+  flex: 1;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  padding: 60px 80px;
+  gap: 60px;
+}
+
+.leftText h2 {
+  font-size: 36px;
+  font-weight: 700;
+  line-height: 1.3;
+}
+
+.formCard {
+  background: #fff;
+  border-radius: 24px;
+  box-shadow: 0 4px 40px rgba(0,0,0,0.08);
+  padding: 40px 48px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.formTitle {
+  font-size: 22px;
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 4px;
+}
